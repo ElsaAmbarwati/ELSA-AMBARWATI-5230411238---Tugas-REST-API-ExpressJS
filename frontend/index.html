@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elsa Logistics - Simplified Dashboard</title>
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- CSS Styling -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Header Navigation (No links menu) -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="logo-container">
+        <div class="custom-logo">
+          <span>E</span>
+        </div>
+        <span class="brand-name">Elsa-Logistics</span>
+      </div>
+    </div>
+    
+    <div class="header-right">
+      <button class="header-icon-btn" title="Cari">🔍</button>
+      <button class="header-icon-btn badge-dot" title="Notifikasi">🔔</button>
+      <div class="header-user-profile">
+        <div class="avatar-placeholder">👨‍💼</div>
+        <div class="user-meta">
+          <span class="user-name">Lincoln Saris</span>
+          <span class="user-role">Head Admin</span>
+        </div>
+        <span class="profile-arrow">▼</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- App Wrapper for Single-Screen Dashboard -->
+  <div class="app-viewport">
+    
+    <!-- Welcome Greeting & Page Actions -->
+    <section class="welcome-actions-row">
+      <div class="welcome-text-block">
+        <span class="welcome-greeting">Sistem Logistik Terpadu</span>
+        <h1 class="welcome-title">Dashboard Utama</h1>
+      </div>
+      
+      <div class="page-action-controls">
+        <button id="btn-add-product" class="btn-pill-primary">＋ Tambah Barang Baru</button>
+      </div>
+    </section>
+
+    <!-- Compact Stats Badges Row -->
+    <section class="stats-row">
+      <!-- Stat 1: Total Products -->
+      <div class="compact-stat-card">
+        <div class="stat-inner-left">
+          <div class="compact-icon-wrapper">📦</div>
+        </div>
+        <div class="stat-inner-right">
+          <div class="value-row">
+            <span class="stat-val" id="val-total-items">0</span>
+            <span class="trend-tag trend-up">+1.92% ↗</span>
+          </div>
+          <span class="stat-label">Total Jenis Barang</span>
+        </div>
+      </div>
+      
+      <!-- Stat 2: Total Stock Volume -->
+      <div class="compact-stat-card">
+        <div class="stat-inner-left">
+          <div class="compact-icon-wrapper">📥</div>
+        </div>
+        <div class="stat-inner-right">
+          <div class="value-row">
+            <span class="stat-val" id="val-total-stock">0</span>
+            <span class="trend-tag trend-up">+1.89% ↗</span>
+          </div>
+          <span class="stat-label">Total Unit Stok</span>
+        </div>
+      </div>
+
+      <!-- Stat 3: Total Valuation -->
+      <div class="compact-stat-card">
+        <div class="stat-inner-left">
+          <div class="compact-icon-wrapper">💰</div>
+        </div>
+        <div class="stat-inner-right">
+          <div class="value-row">
+            <span class="stat-val text-sm" id="val-total-valuation">Rp 0</span>
+            <span class="trend-tag trend-down">-0.98% ↘</span>
+          </div>
+          <span class="stat-label">Valuasi Total Aset</span>
+        </div>
+      </div>
+
+      <!-- Stat 4: Low Stock Alert -->
+      <div class="compact-stat-card">
+        <div class="stat-inner-left">
+          <div class="compact-icon-wrapper">⚠️</div>
+        </div>
+        <div class="stat-inner-right">
+          <div class="value-row">
+            <span class="stat-val text-warning" id="val-low-stock">0</span>
+            <span class="trend-tag trend-urgent">Restock ⚠️</span>
+          </div>
+          <span class="stat-label">Barang Stok Kritis</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Grid Content (Single Screen) -->
+    <div class="dashboard-mockup-grid">
+      
+      <!-- Left Column: Interactive Product Management Table (65% width) -->
+      <div class="grid-card col-span-2">
+        <div class="table-control-header-compact">
+          <div class="table-title-group">
+            <h3>Daftar Inventori Barang</h3>
+            <p class="table-subtitle">Kelola harga, sesuaikan stok, dan monitoring ketersediaan</p>
+          </div>
+          
+          <div class="table-header-filters">
+            <!-- Search & Filters Toolbar -->
+            <div class="table-action-inputs">
+              <!-- Search box -->
+              <div class="header-search-box">
+                <span class="search-ico">🔍</span>
+                <input type="text" id="input-search" placeholder="Cari barang...">
+              </div>
+              
+              <!-- Category Filter Select Dropdown -->
+              <select id="select-category-filter" class="select-pill">
+                <option value="ALL">Semua Kategori</option>
+                <!-- Dynamically populated -->
+              </select>
+
+              <!-- Sort Dropdown -->
+              <select id="select-sort" class="select-pill">
+                <option value="name-asc">Urutan: A-Z</option>
+                <option value="name-desc">Urutan: Z-A</option>
+                <option value="price-asc">Harga: Terendah</option>
+                <option value="price-desc">Harga: Tertinggi</option>
+                <option value="stock-asc">Stok: Tersedikit</option>
+                <option value="stock-desc">Stok: Terbanyak</option>
+              </select>
+
+              <!-- CSV Importer Dihapus -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Table Responsive Container -->
+        <div class="table-responsive">
+          <table class="mockup-table">
+            <thead>
+              <tr>
+                <th width="40"><input type="checkbox" id="select-all-cb"></th>
+                <th>ID</th>
+                <th>Nama Barang</th>
+                <th>Kategori</th>
+                <th>Harga Satuan</th>
+                <th>Stok</th>
+                <th>Aksi Cepat</th>
+                <th>Status</th>
+                <th width="80">Kelola</th>
+              </tr>
+            </thead>
+            <tbody id="inventory-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+          
+          <div class="table-empty-state" id="table-empty-state" style="display: none;">
+            <div class="empty-icon">📂</div>
+            <h4>Barang Tidak Ditemukan</h4>
+            <p>Silakan ubah filter pencarian Anda atau tambahkan produk baru.</p>
+          </div>
+        </div>
+
+        <!-- Table Footer / Count Info -->
+        <div class="table-footer-row">
+          <span class="footer-count" id="table-entries-count">Menampilkan 0 barang</span>
+          <div class="pagination-controls">
+            <button class="btn-pag-nav" disabled>◀</button>
+            <button class="btn-pag-nav" disabled>▶</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Visual Charts & Warning Alerts (35% width) -->
+      <div class="grid-card flex-column">
+        
+        <!-- Part 1: Stock Distribution Chart -->
+        <div class="inner-card-half">
+          <div class="card-header-row">
+            <div class="card-title-group">
+              <h3>Analisis Stok Kategori</h3>
+              <p class="card-subtitle">Penyebaran volume stok barang</p>
+            </div>
+            <button class="btn-more-options">•••</button>
+          </div>
+          
+          <div class="gauge-chart-container">
+            <div class="chart-canvas-wrapper">
+              <canvas id="valuationGaugeChart"></canvas>
+            </div>
+            <div class="gauge-value-overlay">
+              <span class="gauge-overlay-val" id="gauge-valuation-text">Rp 0</span>
+              <span class="gauge-overlay-trend">+100% Aktif</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Part 2: Stock Warning timeline (Mockup style warnings list) -->
+        <div class="inner-card-half border-top-divider">
+          <div class="card-header-row">
+            <div class="card-title-group">
+              <h3>Barang Stok Kritis</h3>
+              <p class="card-subtitle">Segera restock produk-produk ini</p>
+            </div>
+            <button class="btn-more-options">•••</button>
+          </div>
+
+          <div class="tracking-list-container" id="low-stock-timeline">
+            <!-- Dynamically populated warnings timeline -->
+            <div class="alert-placeholder">Tidak ada barang dengan stok kritis 🎉</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal Add/Edit Product -->
+  <div class="modal-overlay" id="product-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-title">Tambah Produk Baru</h3>
+        <button class="btn-close-modal" id="btn-close-modal">×</button>
+      </div>
+      <form id="product-form" class="modal-form">
+        <!-- Hidden input for ID when editing -->
+        <input type="hidden" id="modal-product-id">
+
+        <div class="form-group">
+          <label for="modal-input-name">Nama Barang <span class="required">*</span></label>
+          <input type="text" id="modal-input-name" placeholder="Masukan nama lengkap barang" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="modal-input-price">Harga (IDR) <span class="required">*</span></label>
+            <input type="number" id="modal-input-price" min="0" placeholder="Contoh: 5000" required>
+          </div>
+          <div class="form-group">
+            <label for="modal-input-stock">Stok Awal <span class="required">*</span></label>
+            <input type="number" id="modal-input-stock" min="0" placeholder="Contoh: 100" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="modal-input-category">Kategori <span class="required">*</span></label>
+          <div class="category-select-wrapper">
+            <select id="modal-input-category" required>
+              <option value="">-- Pilih Kategori --</option>
+              <option value="Makanan">Makanan</option>
+              <option value="Minuman">Minuman</option>
+              <option value="Alat Tulis">Alat Tulis</option>
+              <option value="Lainnya">Lainnya</option>
+              <option value="NEW_CATEGORY">+ Tambah Kategori Baru</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Custom Category input (hidden by default) -->
+        <div class="form-group" id="custom-category-group" style="display: none;">
+          <label for="modal-input-custom-category">Nama Kategori Baru <span class="required">*</span></label>
+          <input type="text" id="modal-input-custom-category" placeholder="Contoh: Elektronik">
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-modal">Batal</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-modal">Simpan Produk</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Client Script files -->
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

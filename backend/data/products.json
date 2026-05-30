@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "Indomie Goreng Spesial",
+    "price": 3500,
+    "stock": 150,
+    "category": "Makanan"
+  },
+  {
+    "id": 3,
+    "name": "Buku Tulis Kiky A5",
+    "price": 7500,
+    "stock": 43,
+    "category": "Alat Tulis"
+  },
+  {
+    "id": 4,
+    "name": "Pulpen Pilot Ballliner Black",
+    "price": 12000,
+    "stock": 10,
+    "category": "Alat Tulis"
+  },
+  {
+    "id": 5,
+    "name": "Susu UHT Ultra Milk Cokelat 250ml",
+    "price": 6500,
+    "stock": 120,
+    "category": "Minuman"
+  },
+  {
+    "id": 6,
+    "name": "Chiki Taro Net Rumput Laut",
+    "price": 5000,
+    "stock": 5,
+    "category": "Makanan"
+  }
+]
